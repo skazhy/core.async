@@ -207,6 +207,10 @@
     (is (= (range 10)
            (<!! (a/into [] (a/to-chan (range 10)))))))
 
+  (testing "to-chan"
+    (is [1 3 5 7 9]
+        (<!! (a/into [] (a/to-chan (range 10) (filter odd?))))))
+
   (testing "filter>"
     (is (= [2 4 6]
            (let [out (chan)

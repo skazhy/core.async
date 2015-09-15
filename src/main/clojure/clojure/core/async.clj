@@ -630,11 +630,12 @@
 
 (defn to-chan
   "Creates and returns a channel which contains the contents of coll,
-  closing when exhausted."
-  [coll]
-  (let [ch (chan (bounded-count 100 coll))]
-    (onto-chan ch coll)
-    ch))
+  closing when exhausted. Accepts an optional transducer."
+  ([coll] (to-chan coll nil))
+  ([coll xform]
+     (let [ch (chan (bounded-count 100 coll) xform)]
+       (onto-chan ch coll)
+       ch)))
 
 (defprotocol Mux
   (muxch* [_]))
